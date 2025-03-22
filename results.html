@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results - Quiz Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f4f8;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+        .navbar {
+            background: rgba(30, 144, 255, 0.9);
+            padding: 15px 30px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .navbar a:hover {
+            color: #ffd700;
+            transform: translateY(-2px);
+        }
+        .content {
+            text-align: center;
+            padding: 100px 20px 50px;
+            max-width: 1000px;
+            width: 100%;
+        }
+        .content h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            color: #1e90ff;
+        }
+        .results-table {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .results-table:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            color: #333;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        th {
+            background: rgba(30, 144, 255, 0.2);
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e90ff;
+        }
+        td {
+            font-size: 16px;
+        }
+        tr:hover {
+            background: rgba(30, 144, 255, 0.1);
+        }
+        .no-results {
+            font-size: 18px;
+            color: #ff6f61;
+            margin-top: 20px;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: #1e90ff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(30, 144, 255, 0.4);
+            transition: background 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .back-btn:hover {
+            background: #ff6f61;
+            color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 111, 97, 0.6);
+        }
+        .quiz-details {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .quiz-details h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1e90ff;
+            margin-bottom: 10px;
+        }
+        .quiz-details ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .quiz-details li {
+            font-size: 16px;
+            margin-bottom: 8px;
+            padding: 10px;
+            background: rgba(30, 144, 255, 0.05);
+            border-radius: 5px;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .feedback h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1e90ff;
+            margin-bottom: 10px;
+        }
+        .feedback p {
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div>
+            <a href="home.html">Home</a>
+            <a href="about.html">About</a>
+        </div>
+        <div>
+            <a href="#" onclick="localStorage.removeItem('token'); localStorage.removeItem('userEmail'); auth.signOut(); window.location.href='login.html'">Logout</a>
+        </div>
+    </div>
+    <div class="content">
+        <h1>Your Quiz Results</h1>
+        <div class="results-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Score</th>
+                        <th>Total</th>
+                        <th>Percentage</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="results-body"></tbody>
+            </table>
+            <div id="no-results" class="no-results" style="display: none;">No quiz results found.</div>
+            <div class="quiz-details" id="quiz-details" style="display: none;">
+                <h2>Quiz Questions and Answers</h2>
+                <ul id="questions-list"></ul>
+            </div>
+            <div class="feedback" id="feedback" style="display: none;">
+                <h2>Feedback</h2>
+                <p id="feedback-text"></p>
+            </div>
+        </div>
+        <a href="home.html" class="back-btn">Back to Home</a>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCn3b_hKt83NN_4ZGehCbCnfeZK34VV4Js",
+            authDomain: "new-quiz-platform-2025.firebaseapp.com",
+            projectId: "new-quiz-platform-2025",
+            storageBucket: "new-quiz-platform-2025.firebasestorage.app",
+            messagingSenderId: "502207118365",
+            appId: "1:502207118365:web:35cc03026ff97f67335af4",
+            measurementId: "G-FBEBCD2TPZ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        const resultsBody = document.getElementById('results-body');
+        const noResults = document.getElementById('no-results');
+        const quizDetails = document.getElementById('quiz-details');
+        const questionsList = document.getElementById('questions-list');
+        const feedback = document.getElementById('feedback');
+        const feedbackText = document.getElementById('feedback-text');
+
+        // Expose auth to the global scope for the logout link
+        window.auth = auth;
+
+        // Check authentication state
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                localStorage.setItem('userEmail', user.email);
+                await loadResults(user.email);
+            } else {
+                alert('Please log in first!');
+                window.location.href = 'login.html';
+            }
+        });
+
+        async function loadResults(email) {
+            try {
+                const q = query(collection(db, "scores"), where("email", "==", email), orderBy("timestamp", "desc"));
+                const querySnapshot = await getDocs(q);
+                if (querySnapshot.empty) {
+                    noResults.style.display = 'block';
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const percentage = ((data.score / data.total) * 100).toFixed(2);
+                    const date = new Date(data.timestamp).toLocaleString();
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${data.subject}</td>
+                        <td>${data.score}</td>
+                        <td>${data.total}</td>
+                        <td>${percentage}%</td>
+                        <td>${date}</td>
+                    `;
+                    resultsBody.appendChild(row);
+                });
+
+                // Load details for the most recent quiz
+                const latestDoc = querySnapshot.docs[0]; // Most recent due to orderBy("timestamp", "desc")
+                const latestData = latestDoc.data();
+                await loadQuizDetails(latestData.subject);
+                provideFeedback(latestData.score, latestData.total);
+
+            } catch (err) {
+                console.error('Error loading results:', err);
+                alert('Error loading results: ' + err.message);
+                noResults.style.display = 'block';
+            }
+        }
+
+        async function loadQuizDetails(subject) {
+            try {
+                const response = await fetch('questions.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to load questions: ${response.status}`);
+                }
+                const allQuestions = await response.json();
+                const questions = allQuestions[subject] || [];
+
+                if (questions.length === 0) {
+                    quizDetails.style.display = 'block';
+                    questionsList.innerHTML = '<li>No questions available for this quiz.</li>';
+                    return;
+                }
+
+                quizDetails.style.display = 'block';
+                questionsList.innerHTML = '';
+                questions.forEach((q, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>Q${index + 1}:</strong> ${q.question} <br> <strong>Answer:</strong> ${q.correct}`;
+                    questionsList.appendChild(li);
+                });
+            } catch (err) {
+                console.error('Error loading quiz details:', err);
+                quizDetails.style.display = 'block';
+                questionsList.innerHTML = `<li>Error loading questions: ${err.message}</li>`;
+            }
+        }
+
+        function provideFeedback(score, total) {
+            const percentage = (score / total) * 100;
+            feedback.style.display = 'block';
+
+            if (percentage >= 80) {
+                feedbackText.innerHTML = "Excellent work! You've mastered this subject. Keep up the great performance!";
+                feedbackText.style.color = '#2ecc71'; // Green for success
+            } else if (percentage >= 60) {
+                feedbackText.innerHTML = "Good effort! You're on the right track, but there’s room for improvement. Review the questions below.";
+                feedbackText.style.color = '#f1c40f'; // Yellow for moderate
+            } else {
+                feedbackText.innerHTML = "Needs improvement. Don’t worry—review the answers below and try again to boost your score!";
+                feedbackText.style.color = '#e74c3c'; // Red for low
+            }
+        }
+    </script>
+</body>
+</html>

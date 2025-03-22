@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Quiz Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f4f8;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .navbar {
+            background: rgba(30, 144, 255, 0.9);
+            padding: 15px 30px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+        .navbar .logo span {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .navbar a:hover {
+            color: #ffd700;
+            transform: translateY(-2px);
+        }
+        .side-logo {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            z-index: 900;
+        }
+        .side-logo img {
+            width: 400px; /* Slightly reduced from 480px */
+            height: 400px; /* Square to maintain circular shape */
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            object-fit: cover;
+        }
+        .side-logo img:hover {
+            transform: scale(1.05);
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin-top: 80px;
+            margin-left: 450px; /* Shift to the right */
+            animation: fadeIn 1s ease-in-out;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e90ff;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input {
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #e0e4e8;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input:focus {
+            border-color: #1e90ff;
+            box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+        }
+        button {
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            background: #1e90ff;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(30, 144, 255, 0.4);
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        button:hover {
+            background: #ff6f61;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 111, 97, 0.6);
+        }
+        p {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        p a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        p a:hover {
+            color: #ff6f61;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img src="https://img.freepik.com/premium-vector/quiz-logo-with-speech-bubble-icon_149152-812.jpg" alt="Quiz Platform Logo">
+            <span>Quiz Platform</span>
+        </div>
+        <div>
+            <a href="index.html">Register</a>
+            <a href="login.html">Login</a>
+        </div>
+    </div>
+    <div class="side-logo">
+        <img src="https://img.freepik.com/premium-vector/quiz-logo-with-speech-bubble-icon_149152-812.jpg" alt="Quiz Platform Side Logo">
+    </div>
+    <div class="container">
+        <h1>Register</h1>
+        <form id="registerForm">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="tel" id="phone" placeholder="Phone Number" required>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCn3b_hKt83NN_4ZGehCbCnfeZK34VV4Js",
+            authDomain: "new-quiz-platform-2025.firebaseapp.com",
+            projectId: "new-quiz-platform-2025",
+            storageBucket: "new-quiz-platform-2025.firebasestorage.app",
+            messagingSenderId: "502207118365",
+            appId: "1:502207118365:web:35cc03026ff97f67335af4",
+            measurementId: "G-FBEBCD2TPZ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const phone = document.getElementById('phone').value;
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                localStorage.setItem('phone', phone);
+                localStorage.setItem('token', userCredential.user.accessToken);
+                localStorage.setItem('userEmail', userCredential.user.email);
+                alert('Registration successful!');
+                window.location.href = 'login.html';
+            } catch (err) {
+                console.error('Firebase Error:', err.code, err.message);
+                alert('Error: ' + err.message);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz - Quiz Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f4f8;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Adjusted to accommodate instructions */
+            overflow-x: hidden;
+        }
+        .navbar {
+            background: rgba(30, 144, 255, 0.9);
+            padding: 15px 30px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .navbar a:hover {
+            color: #ffd700;
+            transform: translateY(-2px);
+        }
+        .instructions {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin-top: 80px; /* Space below navbar */
+            margin-bottom: 20px; /* Space before start button */
+            text-align: left;
+        }
+        .instructions h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e90ff;
+            margin-bottom: 15px;
+        }
+        .instructions ul {
+            list-style-type: decimal;
+            padding-left: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin-top: 20px; /* Adjusted for instructions */
+        }
+        #start-btn {
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: 600;
+            background: #1e90ff;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(30, 144, 255, 0.4);
+            transition: background 0.3s, transform 0.3s;
+            margin-top: 20px;
+        }
+        #start-btn:hover {
+            background: #ff6f61;
+            transform: scale(1.05);
+        }
+        #quiz-container {
+            display: none;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e90ff;
+            margin-bottom: 20px;
+        }
+        #timer {
+            font-size: 18px;
+            color: #ff6f61;
+            margin-bottom: 10px;
+        }
+        #progress {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        #question {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        #options .option {
+            padding: 10px;
+            margin: 10px 0;
+            background: #e0e4e8;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        #options .option:hover {
+            background: #d0d4d8;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            background: #1e90ff;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background: #ff6f61;
+            transform: scale(1.05);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #result {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e90ff;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div>
+            <a href="home.html">Home</a>
+            <a href="results.html">Results</a>
+        </div>
+    </div>
+    <div class="instructions">
+        <h2>Quiz Instructions</h2>
+        <ul>
+            <li>The quiz has a total duration of 20 minutes. A timer will display the remaining time.</li>
+            <li>You will answer a set of questions based on the selected subject.</li>
+            <li>Click an option to select your answer. Once selected, you cannot change it.</li>
+            <li>Use the "Previous" and "Next" buttons to navigate between questions.</li>
+            <li>Correct answers turn green, incorrect answers turn red after selection.</li>
+            <li>The quiz ends when you click "Submit" or the timer reaches zero.</li>
+            <li>Your score will be saved and viewable in the Results page after submission.</li>
+        </ul>
+    </div>
+    <div class="container" id="quiz-container">
+        <h1 id="quiz-title"></h1>
+        <div id="timer">Time Left: 20:00</div>
+        <div id="progress"></div>
+        <div id="question"></div>
+        <div id="options"></div>
+        <button id="prev-btn" aria-label="Previous Question">Previous</button>
+        <button id="next-btn" aria-label="Next Question">Next</button>
+        <button id="submit-btn" aria-label="Submit Quiz">Submit</button>
+        <div id="result" style="display: none;"></div>
+    </div>
+    <button id="start-btn" aria-label="Start Quiz">Start Quiz</button>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCn3b_hKt83NN_4ZGehCbCnfeZK34VV4Js",
+            authDomain: "new-quiz-platform-2025.firebaseapp.com",
+            projectId: "new-quiz-platform-2025",
+            storageBucket: "new-quiz-platform-2025.firebasestorage.app",
+            messagingSenderId: "502207118365",
+            appId: "1:502207118365:web:35cc03026ff97f67335af4",
+            measurementId: "G-FBEBCD2TPZ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        const quizContainer = document.getElementById('quiz-container');
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const startBtn = document.getElementById('start-btn');
+        const timerElement = document.getElementById('timer');
+        const resultElement = document.getElementById('result');
+        const progressElement = document.getElementById('progress');
+
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timeLeft = 20 * 60;
+        let timer;
+        let currentUser = null;
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('userEmail', user.email);
+            } else {
+                alert('Please log in first!');
+                window.location.href = 'login.html';
+            }
+        });
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', showNextQuestion);
+        prevBtn.addEventListener('click', showPrevQuestion);
+        submitBtn.addEventListener('click', submitQuiz);
+
+        async function startQuiz() {
+            if (!currentUser) {
+                alert('Please log in first!');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            startBtn.style.display = 'none';
+            quizContainer.style.display = 'block';
+            const subject = new URLSearchParams(window.location.search).get('subject');
+            document.getElementById('quiz-title').innerHTML = `${subject} Quiz`;
+
+            try {
+                const response = await fetch('questions.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to load questions: ${response.status} ${response.statusText}`);
+                }
+                const allQuestions = await response.json();
+                questions = allQuestions[subject] || [];
+                if (questions.length === 0) throw new Error('No questions available for this subject');
+                shuffleArray(questions);
+                showQuestion();
+                startTimer();
+            } catch (err) {
+                console.error('Fetch error details:', err);
+                alert('Error: ' + err.message);
+                quizContainer.style.display = 'none';
+                startBtn.style.display = 'block';
+            }
+        }
+
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.innerHTML = `Time Left: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                if (timeLeft <= 0) submitQuiz();
+            }, 1000);
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestionIndex];
+            questionElement.innerHTML = `${question.question} (Question ${currentQuestionIndex + 1} of ${questions.length})`;
+            progressElement.innerHTML = `Progress: ${currentQuestionIndex + 1}/${questions.length}`;
+            optionsElement.innerHTML = '';
+
+            const options = [...question.incorrect, question.correct];
+            shuffleArray(options);
+            options.forEach(option => {
+                const div = document.createElement('div');
+                div.classList.add('option');
+                div.innerHTML = option;
+                div.addEventListener('click', () => checkAnswer(option, question.correct, div));
+                optionsElement.appendChild(div);
+            });
+
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.disabled = currentQuestionIndex === questions.length - 1;
+            submitBtn.style.display = currentQuestionIndex === questions.length - 1 ? 'inline' : 'none';
+        }
+
+        function checkAnswer(selected, correct, element) {
+            if (!element.classList.contains('answered')) {
+                if (selected === correct) score++;
+                element.classList.add('answered');
+                document.querySelectorAll('.option').forEach(opt => {
+                    opt.style.pointerEvents = 'none';
+                    if (opt.innerHTML === correct) opt.style.backgroundColor = '#90ee90';
+                    else if (opt.innerHTML === selected) opt.style.backgroundColor = '#ff6347';
+                });
+            }
+        }
+
+        function showNextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion();
+            }
+        }
+
+        function showPrevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+
+        async function submitQuiz() {
+            clearInterval(timer);
+            quizContainer.style.display = 'none';
+            resultElement.style.display = 'block';
+            resultElement.innerHTML = `Quiz Over! Your Score: ${score}/${questions.length}`;
+
+            const userEmail = localStorage.getItem('userEmail');
+            const subject = new URLSearchParams(window.location.search).get('subject');
+            const timestamp = new Date().toISOString();
+
+            if (!userEmail) {
+                alert('User email not found. Please log in again.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "scores"), {
+                    email: userEmail,
+                    subject: subject,
+                    score: score,
+                    total: questions.length,
+                    timestamp: timestamp
+                });
+                console.log('Score saved to Firestore!');
+                setTimeout(() => {
+                    window.location.href = 'results.html';
+                }, 2000);
+            } catch (err) {
+                console.error('Error saving score:', err);
+                alert('Error saving score: ' + err.message);
+            }
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Quiz Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3') no-repeat center center fixed;
+            background-size: cover;
+            overflow-x: hidden;
+        }
+        .navbar {
+            background: rgba(30, 144, 255, 0.9); /* Slightly transparent blue for contrast */
+            padding: 15px 30px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 25px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .navbar a:hover {
+            color: #ffd700;
+            transform: translateY(-2px);
+        }
+        .content {
+            text-align: center;
+            padding: 120px 20px 60px;
+            max-width: 900px;
+            margin: 0 auto;
+            flex-grow: 1;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6); /* Darker shadow for readability */
+            color: #ffd700;
+            animation: slideInFromTop 1s ease-out;
+        }
+        .content p {
+            font-size: 20px;
+            line-height: 1.8;
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.5); /* Darker semi-transparent bg for contrast */
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, background 0.3s;
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: calc(0.2s * var(--i));
+        }
+        .content p:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .login-btn {
+            display: inline-block;
+            margin: 40px 0;
+            padding: 15px 40px;
+            background: #ffd700;
+            color: #1e90ff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
+            transition: background 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+            animation: pulse 2s infinite;
+        }
+        .login-btn:hover {
+            background: #ff6f61;
+            color: #fff;
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 111, 97, 0.7);
+        }
+        footer {
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5); /* Darker for contrast */
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInFromTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 20px rgba(255, 215, 0, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content h1 {
+                font-size: 36px;
+            }
+            .content p {
+                font-size: 16px;
+                padding: 15px;
+            }
+            .login-btn {
+                padding: 12px 30px;
+                font-size: 18px;
+            }
+            .navbar a {
+                margin: 0 15px;
+                font-size: 16px;
+            }
+        }
+        @media (max-width: 480px) {
+            .content {
+                padding: 100px 10px 40px;
+            }
+            .content h1 {
+                font-size: 28px;
+            }
+            .content p {
+                font-size: 14px;
+            }
+            .login-btn {
+                padding: 10px 25px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div>
+            <a href="home.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="results.html">Results</a>
+        </div>
+        <div>
+            <a href="login.html">Login</a>
+        </div>
+    </div>
+    <div class="content">
+        <h1>About Quiz Platform</h1>
+        <p style="--i: 1;">
+            Welcome to the Quiz Platform, a cutting-edge educational tool designed to enhance your knowledge across a wide range of computer science topics! Built with Firebase for secure authentication and Firestore for storing quiz results, this platform offers an interactive and personalized learning experience.
+        </p>
+        <p style="--i: 2;">
+            Whether you're a student preparing for exams, a professional sharpening your skills, or a curious learner exploring new subjects, our platform provides quizzes on topics like Operating Systems, DBMS, Computer Networks, and more. Each quiz is timed (20 minutes) and features a variety of questions to test your understanding, with immediate feedback to help you improve.
+        </p>
+        <p style="--i: 3;">
+            What sets us apart? Your progress is uniquely yours—results are saved per user, so you can track your performance over time. With an intuitive interface, vibrant design, and seamless navigation, learning becomes both fun and effective. Dive in to challenge yourself, review your results, and master key concepts at your own pace!
+        </p>
+        <a href="login.html" class="login-btn">Login Here</a>
+    </div>
+    <footer>
+        © 2025 Quiz Platform. All rights reserved.
+    </footer>
+</body>
+</html>

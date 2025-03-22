@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Quiz Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            background: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .navbar {
+            background: rgba(30, 144, 255, 0.9); /* Semi-transparent blue for contrast */
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .navbar a:hover {
+            color: #ffd700;
+            transform: translateY(-2px);
+        }
+        .content {
+            text-align: center;
+            padding: 80px 20px 50px; /* Increased top padding to account for fixed navbar */
+        }
+        .content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6); /* Darker shadow for readability */
+            color: #ffd700;
+        }
+        .subjects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .subject-card {
+            background: rgba(0, 0, 0, 0.5); /* Darker semi-transparent bg for contrast */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, background 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .subject-card:hover {
+            transform: scale(1.05);
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .subject-card a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .subject-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div>
+            <a href="home.html">Home</a>
+            <a href="about.html">About</a> <!-- Added About link for consistency -->
+            <a href="results.html">Results</a>
+        </div>
+        <div>
+            <a href="#" onclick="localStorage.removeItem('token'); localStorage.removeItem('userEmail'); window.location.href='login.html'">Logout</a>
+        </div>
+    </div>
+    <div class="content">
+        <h1>Welcome to the Quiz Platform</h1>
+        <div class="subjects">
+            <div class="subject-card"><img src="https://images.idgesg.net/images/article/2022/03/shutterstock_559459693-03.03.22-operating-system-os-for-business-which-solution-is-best-100920685-large.jpg?auto=webp&quality=85,70"><a href="quiz.html?subject=Operating+Systems">Operating Systems</a></div>
+            <div class="subject-card"><img src="https://thumbs.dreamstime.com/z/round-linear-concept-dbms-vector-database-management-system-isolated-illustration-outline-icons-blue-yellow-colors-98958295.jpg"><a href="quiz.html?subject=DBMS">Database Management Systems</a></div>
+            <div class="subject-card"><img src="https://i.fbcd.co/products/original/0847e3fb226f70fcd3f7aec6beeda7c5140a35cd100f8cb51a437593ddca8e2e.jpg"><a href="quiz.html?subject=Computer+Networks">Computer Networks</a></div>
+            <div class="subject-card"><img src="https://thumbs.dreamstime.com/z/data-structure-icon-monochrome-simple-line-data-science-icon-templates-web-design-infographics-data-structure-icon-line-251848631.jpg"><a href="quiz.html?subject=Data+Structures">Data Structures</a></div>
+            <div class="subject-card"><img src="https://miro.medium.com/v2/resize:fit:1358/1*4ZcW5tSdizlbtDQyVpRTuA.jpeg"><a href="quiz.html?subject=Algorithms">Algorithms</a></div>
+            <div class="subject-card"><img src="https://images.credly.com/images/1e3e36a0-ab85-40f7-802e-006e90211db6/Software_Engineering_GVSU_Badge.png"><a href="quiz.html?subject=Software+Engineering">Software Engineering</a></div>
+            <div class="subject-card"><img src="https://karpagamtech.ac.in/kit/wp-content/uploads/2023/06/Redefining-Engineering-with-Artificial-Intelligence.jpg"><a href="quiz.html?subject=Artificial+Intelligence">Artificial Intelligence</a></div>
+            <div class="subject-card"><img src="https://www.profesionalreview.com/wp-content/uploads/2019/08/Machine-Learning-5.jpeg"><a href="quiz.html?subject=Machine+Learning">Machine Learning</a></div>
+            <div class="subject-card"><img src="https://middlemarketgrowth.org/wp-content/uploads/2023/06/awards-abacode-private-equity-cybersecurity.jpg"><a href="quiz.html?subject=Cybersecurity">Cybersecurity</a></div>
+            <div class="subject-card"><img src="https://datafloq.com/wp-content/uploads/2022/10/computer-architecture-img.png"><a href="quiz.html?subject=Computer+Architecture">Computer Architecture</a></div>
+            <div class="subject-card"><img src="https://i.ytimg.com/vi/UMSchRNQO2M/maxresdefault.jpg"><a href="quiz.html?subject=Theory+of+Computation">Theory of Computation</a></div>
+            <div class="subject-card"><img src="https://thumbs.dreamstime.com/z/compiler-linear-icon-modern-outline-logo-concept-wh-white-background-programming-collection-suitable-use-web-apps-133525504.jpg"><a href="quiz.html?subject=Compilers">Compilers</a></div>
+            <div class="subject-card"><img src="https://miro.medium.com/v2/resize:fit:886/1*SDtxak3dFU-zTyVJK7AnsQ.png"><a href="quiz.html?subject=Parallel+Computing">Parallel Computing</a></div>
+            <div class="subject-card"><img src="https://png.pngtree.com/thumb_back/fh260/background/20230706/pngtree-3d-rendered-graphic-design-on-computer-image_3815260.jpg"><a href="quiz.html?subject=Computer+Graphics">Computer Graphics</a></div>
+            <div class="subject-card"><img src="https://cdn.analyticsvidhya.com/wp-content/uploads/2021/06/35152Deep_Learning.jpeg"><a href="quiz.html?subject=Deep+Learning">Deep Learning</a></div>
+            <div class="subject-card"><img src="https://greencloudvps.com/greencloudvps/wp-content/uploads/2022/07/distributed-system-3.jpg"><a href="quiz.html?subject=Distributed+Computing">Distributed Computing</a></div>
+            <div class="subject-card"><img src="https://donklephant.com/wp-content/uploads/2018/09/future-of-cloud-computing.jpeg"><a href="quiz.html?subject=Cloud+Computing">Cloud Computing</a></div>
+            <div class="subject-card"><img src="http://www.thinknexttraining.com/images/Web-Development-Course-in-Chandigarh-mob.jpg"><a href="quiz.html?subject=Web+Development">Web Development</a></div>
+            <div class="subject-card"><img src="https://i.ibb.co/5KM4Ps9/mc-pure-compressor.jpg"><a href="quiz.html?subject=Mobile+Computing">Mobile Computing</a></div>
+            <div class="subject-card"><img src="https://mobilaser.kz/wp-content/uploads/2020/11/big-data-1.jpg"><a href="quiz.html?subject=Big+Data">Big Data</a></div>
+        </div>
+    </div>
+    <script>
+        if (!localStorage.getItem('token')) {
+            alert('Please log in first!');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
